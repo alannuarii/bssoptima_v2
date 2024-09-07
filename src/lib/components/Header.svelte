@@ -16,6 +16,16 @@
 		>
 		<div class="ms-auto me-5"><Timer /></div>
 		<div class="me-4 reload">
+			<a href="https://model.bssoptima.com" target="_blank" class="model"
+				><i
+					class="bi-cpu"
+					data-bs-toggle="tooltip"
+					data-bs-placement="bottom"
+					data-bs-title="Model"
+				/></a
+			>
+		</div>
+		<div class="me-4 reload">
 			<button on:click={reload}
 				><i
 					class="bi-arrow-clockwise"
@@ -54,7 +64,8 @@
 		font-size: 22px;
 		cursor: pointer;
 	}
-	button {
+	button,
+	.model {
 		background: none;
 		color: inherit;
 		border: none;

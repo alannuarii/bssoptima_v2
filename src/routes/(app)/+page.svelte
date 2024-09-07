@@ -64,9 +64,9 @@
 						</div>
 					</div>
 				{:else}
-					<div class="mb-4">
+					<div class="mb-5">
 						<h5 class="mb-3">Forecast Produksi</h5>
-						<div class="mb-3 row">
+						<div class="mb-2 row">
 							<label for="inputPassword" class="col-6 col-form-label"
 								>Forecast Total Produksi PV</label
 							>
@@ -80,7 +80,7 @@
 							</div>
 							<label for="inputPassword" class="col-2 col-form-label">kWh</label>
 						</div>
-						<div class="mb-3 row">
+						<div class="mb-2 row">
 							<label for="inputPassword" class="col-6 col-form-label"
 								>Forecast Kebutuhan Smoothing BSS</label
 							>
@@ -110,51 +110,86 @@
 						</div>
 					</div>
 					<div class="">
-						<h5 class="mb-3">Rekomendasi Setting Parameter</h5>
-						<div class="mb-3 row">
-							<label for="inputPassword" class="col-6 col-form-label"
+						<h5 class="mb-2">Rekomendasi Setting Parameter</h5>
+						<div class="row mb-2">
+							<div class="col-3 offset-4 text-center feeder">BSS Feeder 1</div>
+							<div class="col-3 offset-1 text-center feeder">BSS Feeder 2</div>
+						</div>
+						<div class="mb-2 row">
+							<label for="inputPassword" class="col-4 col-form-label"
 								>Kebutuhan %DoD yang Dibutuhkan</label
 							>
-							<div class="col-4">
+							<div class="col-3">
 								<input
 									type="text"
 									class="form-control text-center"
-									value={kebutuhanDoD.toFixed(2)}
+									value={(kebutuhanDoD / 2).toFixed(2)}
 									disabled
 								/>
 							</div>
-							<label for="inputPassword" class="col-2 col-form-label">%</label>
-						</div>
-						<div class="mb-3 row">
-							<label for="inputPassword" class="col-6 col-form-label">Setting C-rate</label>
-							<div class="col-4">
-								<input type="text" class="form-control text-center" value="0.2" disabled />
-							</div>
-							<label for="inputPassword" class="col-2 col-form-label">C</label>
-						</div>
-						<div class="mb-3 row">
-							<label for="inputPassword" class="col-6 col-form-label">Setting Ramp Rate</label>
-							<div class="col-4">
+							<label for="inputPassword" class="col-1 col-form-label">%</label>
+							<div class="col-3">
 								<input
 									type="text"
 									class="form-control text-center"
-									value={rampRate == 200 ? 200 : rampRate.toFixed(2)}
+									value={(kebutuhanDoD / 2).toFixed(2)}
 									disabled
 								/>
 							</div>
-							<label for="inputPassword" class="col-2 col-form-label">kW/s</label>
+							<label for="inputPassword" class="col-1 col-form-label">%</label>
+						</div>
+						<div class="mb-2 row">
+							<label for="inputPassword" class="col-4 col-form-label">Setting C-rate</label>
+							<div class="col-3">
+								<input type="text" class="form-control text-center" value="0.1" disabled />
+							</div>
+							<label for="inputPassword" class="col-1 col-form-label">C</label>
+							<div class="col-3">
+								<input type="text" class="form-control text-center" value="0.1" disabled />
+							</div>
+							<label for="inputPassword" class="col-1 col-form-label">C</label>
+						</div>
+						<div class="mb-2 row">
+							<label for="inputPassword" class="col-4 col-form-label">Setting Ramp Rate</label>
+							<div class="col-3">
+								<input
+									type="text"
+									class="form-control text-center"
+									value={((rampRate == 200 ? 200 : rampRate) / 2).toFixed(2)}
+									disabled
+								/>
+							</div>
+							<label for="inputPassword" class="col-1 col-form-label">kW/s</label>
+							<div class="col-3">
+								<input
+									type="text"
+									class="form-control text-center"
+									value={((rampRate == 200 ? 200 : rampRate) / 2).toFixed(2)}
+									disabled
+								/>
+							</div>
+							<label for="inputPassword" class="col-1 col-form-label">kW/s</label>
 						</div>
 						<div class="row">
-							<label for="inputPassword" class="col-6 col-form-label">Setting Max Beban BSS</label>
-							<div class="col-4">
+							<label for="inputPassword" class="col-4 col-form-label">Setting Max Beban BSS</label>
+							<div class="col-3">
 								<input
 									type="text"
 									class="form-control text-center"
-									value={maxBebanBSS.toFixed(2)}
+									value={(maxBebanBSS / 2).toFixed(2)}
 									disabled
 								/>
 							</div>
-							<label for="inputPassword" class="col-2 col-form-label">kW</label>
+							<label for="inputPassword" class="col-1 col-form-label">kW</label>
+							<div class="col-3">
+								<input
+									type="text"
+									class="form-control text-center"
+									value={(maxBebanBSS / 2).toFixed(2)}
+									disabled
+								/>
+							</div>
+							<label for="inputPassword" class="col-1 col-form-label">kW</label>
 						</div>
 					</div>
 				{/if}
@@ -217,7 +252,7 @@
 	.btn:hover {
 		background-color: #43a6a3df;
 	} */
-	h5 {
+	h5, .feeder {
 		font-weight: 700;
 	}
 	.setting h3 {
