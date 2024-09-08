@@ -1,40 +1,22 @@
 <script>
-	import { arrayDate, konversiTahunBulan } from '../js/date';
+	import { konversiTahunBulan } from '../js/date';
+	import ModalBms from './ModalBMS.svelte';
 
 	export let numBSS;
 	export let dataBMS;
-
-	const tanggalData = arrayDate();
 </script>
 
 <section>
 	<div>
 		<h1 class="mb-4 text-center">MONITORING BSS FEEDER {numBSS}</h1>
 	</div>
-	<!-- <div class="row gx-0 mb-4 d-flex align-items-center">
-		<div class="col-1 text-center"><h5>Periode</h5></div>
-		<div class="col-2">
-			<input
-				type="text"
-				class="form-control form-control-sm text-center"
-				value={tanggalData[0]}
-				disabled
-			/>
-		</div>
-		<div class="col-1 text-center"><h5>hingga</h5></div>
-		<div class="col-2">
-			<input
-				type="text"
-				class="form-control form-control-sm text-center"
-				value={tanggalData[1]}
-				disabled
-			/>
-		</div>
-	</div> -->
 	<div class="d-flex flex-wrap flex-row justify-content-evenly">
 		{#each dataBMS as bms}
 			<div class="output border rounded-4 p-2 text-center mb-2 bg-white">
-				<h5 class="text-center">BMS {bms.id_bms}</h5>
+				<ModalBms {bms} />
+				<h5 class="btn text-center" data-bs-toggle="modal" data-bs-target="#BMS{bms.id_bms}">
+					BMS {bms.id_bms}
+				</h5>
 				<p>Capacity</p>
 				<div
 					class="progress mb-2"
@@ -88,6 +70,12 @@
 	.output h5 {
 		font-size: 13px;
 		font-weight: 700;
+		border: none;
+		padding: 0;
+		cursor: pointer;
+	}
+	.output h5:hover {
+		color: #ed7d31;
 	}
 	.output h6 {
 		font-size: 7px;
