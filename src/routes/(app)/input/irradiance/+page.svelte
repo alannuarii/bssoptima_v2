@@ -1,8 +1,9 @@
 <script>
-	import { getBefore4Day } from '../../../../lib/js/date';
+	import { getBefore4Day, date6 } from '../../../../lib/js/date';
 
 	export let data;
 	const dates = data.data1.data.length > 0 ? data.data1.data : [];
+	const lastirr = data.data2.data.length > 0 ? data.data2.data[0].waktu : [];
 	const fourDays = getBefore4Day();
 
 	const handleFileUpload = (event) => {
@@ -31,8 +32,6 @@
 			year: 'numeric'
 		});
 	});
-
-	console.log(savedData[3]);
 </script>
 
 <section>
@@ -46,7 +45,7 @@
 					<label for="exampleFormControlInput2" class="form-label">Upload File</label>
 					<input type="file" class="form-control" name="irradiance" on:change={handleFileUpload} />
 				</div>
-				<div class="px-3 py-2"><h6>Data terakhir : {savedData[3]}</h6></div>
+				<div class="px-3 py-2"><h6>Data terakhir : {date6(lastirr)}</h6></div>
 				<div class="d-flex flex-wrap justify-content-evenly mt-2">
 					{#each arrayDays as day}
 						<p class="tanggal">

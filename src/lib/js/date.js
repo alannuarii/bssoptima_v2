@@ -255,3 +255,16 @@ export const getBefore4Day = () => {
 	return dateArray;
 	// [ '2023-05-09', '2023-05-08', '2023-05-07', '2023-05-06' ]
 };
+
+export const date6 = (tanggal) => {
+	var dateObj = new Date(tanggal);
+	var day = dateObj.getUTCDate();
+	var month = dateObj.getUTCMonth() + 1; // Menggunakan "+1" karena bulan dimulai dari 0 (Januari=0, Februari=1, dst.)
+	var year = dateObj.getUTCFullYear();
+
+	// Mengatur format tanggal
+	var formattedDate = day + '/' + (month < 10 ? '0' : '') + month + '/' + year;
+	return formattedDate;
+
+	// convert Thu, 23 Feb 2023 00:00:00 GMT to 23/02/2023
+};

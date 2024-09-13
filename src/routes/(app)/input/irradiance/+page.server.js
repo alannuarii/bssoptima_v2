@@ -19,10 +19,13 @@ export const actions = {
 
 
 export const load = async () => {
-	const res = await fetch(`${API_ENDPOINT}/getlast4days`);
-	const data = await res.json();
+	const [res1, res2] = await Promise.all([
+		fetch(`${API_ENDPOINT}/getlast4days`).then((res) => res.json()),
+		fetch(`${API_ENDPOINT}/lastirradiance`).then((res) => res.json())
+	])
 
 	return {
-		data1: data
+		data1: res1,
+		data2: res2
 	};
 };
