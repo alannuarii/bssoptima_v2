@@ -26,6 +26,16 @@
 			>
 		</div>
 		<div class="me-4 reload">
+			<button data-bs-toggle="modal" data-bs-target="#modalSOP"
+				><i
+					class="bi-info-circle"
+					data-bs-toggle="tooltip"
+					data-bs-placement="bottom"
+					data-bs-title="SOP"
+				/></button
+			>
+		</div>
+		<div class="me-4 reload">
 			<button on:click={reload}
 				><i
 					class="bi-arrow-clockwise"

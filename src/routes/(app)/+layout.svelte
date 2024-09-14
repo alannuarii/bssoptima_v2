@@ -1,6 +1,7 @@
 <script>
 	import Sidebar from '../../lib/components/Sidebar.svelte';
 	import Header from '../../lib/components/Header.svelte';
+	import ModalSop from '../../lib/components/ModalSOP.svelte';
 </script>
 
 <svelte:head>
@@ -22,6 +23,7 @@
 			</div>
 		</div>
 	</div>
+	<ModalSop />
 </main>
 
 <style>
