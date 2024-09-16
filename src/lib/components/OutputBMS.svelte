@@ -56,7 +56,7 @@
 				</div>
 				<div class="row">
 					<div class="col-1"><h6>Usia:</h6></div>
-					<div class="col text-start"><h6>{konversiTahunBulan((bms.rul - 1600) / 75)}</h6></div>
+					<div class="col text-start"><h6>{konversiTahunBulan(bms.rul / 365)}</h6></div>
 				</div>
 			</div>
 		{/each}
