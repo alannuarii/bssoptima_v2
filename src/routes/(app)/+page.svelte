@@ -45,7 +45,7 @@
 	const rampRate =
 		Math.max(...arrayRampRate) * 6.8 * 0.1917 < 200
 			? Math.max(...arrayRampRate) * 6.8 * 0.1917
-			: 200;
+			: 10;
 </script>
 
 <section>
@@ -155,20 +155,20 @@
 								<input
 									type="text"
 									class="form-control text-center"
-									value={((rampRate == 200 ? 200 : rampRate) / 2).toFixed(2)}
+									value={((rampRate == 200 ? 10 : rampRate) / 2).toFixed(2)}
 									disabled
 								/>
 							</div>
-							<label for="inputPassword" class="col-1 col-form-label">kW/s</label>
+							<label for="inputPassword" class="col-1 col-form-label">kW/Hz</label>
 							<div class="col-3">
 								<input
 									type="text"
 									class="form-control text-center"
-									value={((rampRate == 200 ? 200 : rampRate) / 2).toFixed(2)}
+									value={((rampRate == 200 ? 10 : rampRate) / 2).toFixed(2)}
 									disabled
 								/>
 							</div>
-							<label for="inputPassword" class="col-1 col-form-label">kW/s</label>
+							<label for="inputPassword" class="col-1 col-form-label">kW/Hz</label>
 						</div>
 						<div class="row">
 							<label for="inputPassword" class="col-4 col-form-label">Setting Max Beban BSS</label>
