@@ -112,14 +112,14 @@
 					<div class="">
 						<h5 class="mb-2">Rekomendasi Setting Parameter</h5>
 						<div class="row mb-2">
-							<div class="col-3 offset-4 text-center feeder">BSS Feeder 1</div>
-							<div class="col-3 offset-1 text-center feeder">BSS Feeder 2</div>
+							<div class="col-2 offset-5 text-center feeder">BSS Feeder 1</div>
+							<div class="col-2 offset-1 text-center feeder">BSS Feeder 2</div>
 						</div>
 						<div class="mb-2 row">
 							<label for="inputPassword" class="col-4 col-form-label"
 								>Kebutuhan %DoD yang Dibutuhkan</label
 							>
-							<div class="col-3">
+							<div class="col-2 offset-1">
 								<input
 									type="text"
 									class="form-control text-center"
@@ -128,7 +128,7 @@
 								/>
 							</div>
 							<label for="inputPassword" class="col-1 col-form-label">%</label>
-							<div class="col-3">
+							<div class="col-2">
 								<input
 									type="text"
 									class="form-control text-center"
@@ -140,18 +140,18 @@
 						</div>
 						<div class="mb-2 row">
 							<label for="inputPassword" class="col-4 col-form-label">Setting C-rate</label>
-							<div class="col-3">
+							<div class="col-2 offset-1">
 								<input type="text" class="form-control text-center" value="0.1" disabled />
 							</div>
 							<label for="inputPassword" class="col-1 col-form-label">C</label>
-							<div class="col-3">
+							<div class="col-2">
 								<input type="text" class="form-control text-center" value="0.1" disabled />
 							</div>
 							<label for="inputPassword" class="col-1 col-form-label">C</label>
 						</div>
 						<div class="mb-2 row">
 							<label for="inputPassword" class="col-4 col-form-label">Setting Ramp Rate</label>
-							<div class="col-3">
+							<div class="col-2 offset-1">
 								<input
 									type="text"
 									class="form-control text-center"
@@ -160,7 +160,7 @@
 								/>
 							</div>
 							<label for="inputPassword" class="col-1 col-form-label">kW/Hz</label>
-							<div class="col-3">
+							<div class="col-2">
 								<input
 									type="text"
 									class="form-control text-center"
@@ -172,7 +172,7 @@
 						</div>
 						<div class="row">
 							<label for="inputPassword" class="col-4 col-form-label">Setting Max Beban BSS</label>
-							<div class="col-3">
+							<div class="col-2 offset-1">
 								<input
 									type="text"
 									class="form-control text-center"
@@ -181,7 +181,7 @@
 								/>
 							</div>
 							<label for="inputPassword" class="col-1 col-form-label">kW</label>
-							<div class="col-3">
+							<div class="col-2">
 								<input
 									type="text"
 									class="form-control text-center"
