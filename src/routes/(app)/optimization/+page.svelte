@@ -57,7 +57,7 @@
 	const rampRate =
 		Math.max(...arrayRampRate) * 6.8 * 0.1917 < 200
 			? Math.max(...arrayRampRate) * 6.8 * 0.1917
-			: 20;
+			: 10;
 
 	const datas = [
 		{ x: x1, y: y1, tanggal: tanggal1[0] },

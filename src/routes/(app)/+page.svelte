@@ -45,7 +45,7 @@
 	const rampRate =
 		Math.max(...arrayRampRate) * 6.8 * 0.1917 < 200
 			? Math.max(...arrayRampRate) * 6.8 * 0.1917
-			: 10;
+			: 20;
 </script>
 
 <section>
