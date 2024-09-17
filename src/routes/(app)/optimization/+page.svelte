@@ -57,7 +57,7 @@
 	const rampRate =
 		Math.max(...arrayRampRate) * 6.8 * 0.1917 < 200
 			? Math.max(...arrayRampRate) * 6.8 * 0.1917
-			: 200;
+			: 10;
 
 	const datas = [
 		{ x: x1, y: y1, tanggal: tanggal1[0] },
@@ -171,7 +171,7 @@
 						disabled
 					/>
 				</div>
-				<label for="inputPassword" class="col-2 col-form-label">kW/s</label>
+				<label for="inputPassword" class="col-2 col-form-label">kW/Hz</label>
 			</div>
 			<div class="row">
 				<label for="inputPassword" class="col-6 col-form-label">Setting Max Beban BSS</label>
