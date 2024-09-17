@@ -155,7 +155,7 @@
 								<input
 									type="text"
 									class="form-control text-center"
-									value={((rampRate == 200 ? 10 : rampRate) / 2).toFixed(2)}
+									value={((rampRate == 200 ? 20 : rampRate) / 2).toFixed(2)}
 									disabled
 								/>
 							</div>
@@ -164,7 +164,7 @@
 								<input
 									type="text"
 									class="form-control text-center"
-									value={((rampRate == 200 ? 10 : rampRate) / 2).toFixed(2)}
+									value={((rampRate == 200 ? 20 : rampRate) / 2).toFixed(2)}
 									disabled
 								/>
 							</div>

@@ -167,7 +167,7 @@
 					<input
 						type="text"
 						class="form-control text-center"
-						value={rampRate == 200 ? 200 : rampRate.toFixed(2)}
+						value={rampRate == 200 ? 10 : rampRate.toFixed(2)}
 						disabled
 					/>
 				</div>
