@@ -4,7 +4,7 @@ import { getYesterday, getToday } from '../../lib/js/date';
 export const load = async () => {
 	const [res1, res2] = await Promise.all([
 		fetch(`${API_ENDPOINT}/optimization/${getYesterday()}`).then((res) => res.json()),
-		fetch(`https://sierrapy.alanpy.xyz/rombss/${getToday()}`).then((res) => res.json())
+		fetch(`https://api-moma.alan.web.id/rombss/${getToday()}`).then((res) => res.json())
 	]);
 
 	return {
