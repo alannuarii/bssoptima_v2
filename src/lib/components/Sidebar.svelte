@@ -33,6 +33,11 @@
 				><i class="bi-battery-charging text-primary p-1 me-2" /> Optimization Result
 			</a>
 		</li>
+		<li class="nav-item">
+			<a href="/rekap" class="nav-link text-secondary " aria-current="page"
+				><i class="bi-table text-primary p-1 me-2" /> Rekap Data
+			</a>
+		</li>
 	</ul>
 	<div class="powered position-absolute bottom-0 start-0 mb-3 ms-3">
 		<img src={pnp} class="img-fluid pnp mb-1" alt="" />
