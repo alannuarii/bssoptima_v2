@@ -59,7 +59,7 @@
 			{#each items as item, index}
 				<tr>
 					<td>{index + 1}</td>
-					<td>{date(`2023-07-${index + 1}`)}</td>
+					<td>{date(`2024-10-${index + 1}`)}</td>
 					<td>{(Math.random() * (40 - 20) + 20).toFixed(2)}</td>
 					<td>0.20</td>
 					<td>10.00</td>

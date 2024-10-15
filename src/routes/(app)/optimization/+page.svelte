@@ -57,7 +57,7 @@
 	const rampRate =
 		Math.max(...arrayRampRate) * 6.8 * 0.1917 < 200
 			? Math.max(...arrayRampRate) * 6.8 * 0.1917
-			: 10;
+			: 20;
 
 	const datas = [
 		{ x: x1, y: y1, tanggal: tanggal1[0] },
@@ -167,7 +167,7 @@
 					<input
 						type="text"
 						class="form-control text-center"
-						value={rampRate == 200 ? 10 : rampRate.toFixed(2)}
+						value={rampRate == 200 ? 20 : rampRate.toFixed(2)}
 						disabled
 					/>
 				</div>
