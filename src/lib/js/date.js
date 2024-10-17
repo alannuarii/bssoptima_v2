@@ -280,3 +280,12 @@ export const getYearMonth = () => {
 	return formattedDate;
 	// 2023-07
 };
+
+export const yearMonthID = (format) => {
+	const date = new Date(format); // Membuat objek Date dari string
+	const month = new Intl.DateTimeFormat('id-ID', { month: 'long' }).format(date); // Mengambil nama bulan dalam bahasa Indonesia
+	const year = date.getFullYear(); // Mengambil tahun
+	const formattedDate = `${month} ${year}`;
+	return formattedDate;
+	// Feburari 2023
+};

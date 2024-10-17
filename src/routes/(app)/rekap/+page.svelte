@@ -1,15 +1,15 @@
 <script>
-	import { date, getYearMonth } from '../../../lib/js/date';
+	import { date, getYearMonth, yearMonthID } from '../../../lib/js/date';
 	import { page } from '$app/stores';
+
+	export let data;
+
+	const settings = data.data.data.length > 0 ? data.data.data : [];
 
 	$: searchParam = $page.url.search;
 	$: valueSearch = searchParam.length > 0 ? searchParam.slice(7) : getYearMonth();
 
-	let randomNumber = (Math.random() * (40 - 20) + 20).toFixed(2);
-
-	let items = Array.from({ length: 31 }, (_, i) => i + 1);
-
-	// $: console.log(searchParam);
+	$: dataBulan = yearMonthID(valueSearch);
 </script>
 
 <section>
@@ -33,8 +33,8 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-4 d-flex align-items-center justify-content-end">
-			<h6>DATA BULAN JULI 2023</h6>
+		<div class="col-5 d-flex align-items-center justify-content-end">
+			<h6>DATA BULAN {dataBulan.toUpperCase()}</h6>
 		</div>
 	</div>
 	<table class="table table-bordered text-center bg-white">
@@ -69,14 +69,14 @@
 			</tr>
 		</thead>
 		<tbody>
-			{#each items as item, index}
+			{#each settings as set, index}
 				<tr>
 					<td>{index + 1}</td>
-					<td>{date(`2024-10-${index + 1}`)}</td>
-					<td>{(Math.random() * (40 - 20) + 20).toFixed(2)}</td>
-					<td>0.20</td>
-					<td>10.00</td>
-					<td>{(Math.random() * (9000 - 5000) + 4000).toFixed(2)}</td>
+					<td>{date(set.tanggal)}</td>
+					<td>{set.dod.toFixed(2)}</td>
+					<td>{set.crate}</td>
+					<td>{set.ramprate}</td>
+					<td>{set.maxbss}</td>
 				</tr>
 			{/each}
 		</tbody>
