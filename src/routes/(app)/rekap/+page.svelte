@@ -1,8 +1,15 @@
 <script>
-	import { date } from '../../../lib/js/date';
+	import { date, getYearMonth } from '../../../lib/js/date';
+	import { page } from '$app/stores';
+
+	$: searchParam = $page.url.search;
+	$: valueSearch = searchParam.length > 0 ? searchParam.slice(7) : getYearMonth();
+
 	let randomNumber = (Math.random() * (40 - 20) + 20).toFixed(2);
 
 	let items = Array.from({ length: 31 }, (_, i) => i + 1);
+
+	// $: console.log(searchParam);
 </script>
 
 <section>
@@ -15,7 +22,13 @@
 				<label for="inputMonth" class="col-sm-3 col-form-label">Pilih bulan</label>
 				<div class="col-sm-7">
 					<form>
-						<input type="month" class="form-control form-control-sm" name="bulan" value="2023-07" />
+						<input
+							type="month"
+							class="form-control form-control-sm"
+							bind:value={valueSearch}
+							name="bulan"
+							onchange="this.form.submit()"
+						/>
 					</form>
 				</div>
 			</div>
