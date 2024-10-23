@@ -9,7 +9,7 @@
 
 	let it1Data = [];
 	let it2Data = [];
-	let error = null;
+	let error = "Loading . . .";
 
 	const isDataAvailable = (data) => data && data.length > 0;
 
@@ -265,7 +265,7 @@
 						</div>
 					</div>
 				{:else}
-					<p class="text-center">Error: {error}</p>
+					<p class="text-center">{error}</p>
 				{/if}
 			</div>
 		</div>
