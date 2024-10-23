@@ -142,7 +142,7 @@
 			<h5 class="mb-3">Rekomendasi Setting Parameter {getTomorrow()}</h5>
 			<div class="mb-3 row">
 				<label for="inputPassword" class="col-6 col-form-label"
-					>Kebutuhan %DoD yang Dibutuhkan</label
+					>Kebutuhan %DoD</label
 				>
 				<div class="col-4">
 					<input

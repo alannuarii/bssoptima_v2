@@ -1,15 +1,11 @@
 import { API_ENDPOINT } from '$env/static/private';
-import { getYesterday, getToday } from '../../lib/js/date';
 
 export const load = async () => {
-	const [res1, res2] = await Promise.all([
-		fetch(`${API_ENDPOINT}/optimization/${getYesterday()}`).then((res) => res.json()),
-		fetch(`https://api-moma.alan.web.id/rombss/${getToday()}`).then((res) => res.json())
-	]);
+	const res = await fetch(`${API_ENDPOINT}/settingparameter`);
+	const data4 = await res.json();
 
 	return {
-		data4: res1.data.avg,
-		data5: res1.data.max,
-        data6: res2
+		data4
 	};
-};
+}
+

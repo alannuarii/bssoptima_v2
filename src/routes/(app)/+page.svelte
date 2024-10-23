@@ -1,62 +1,65 @@
 <script>
 	import { getToday, convertDate } from '../../lib/js/date';
+	import { units } from '../../lib/js/units';
+	import { onMount } from 'svelte';
 	import bssOn from '../../lib/img/bss-on.png';
-	import bssOff from '../../lib/img/bss-off.png';
-	import moma from '../../lib/img/moma.png';
 
 	export let data;
+	const settings = data.data4.data.length > 0 ? data.data4.data : [];
 
-	const bss1 = data.data6.data.length > 0 ? data.data6.data[0].status : '';
-	const bss2 = data.data6.data.length > 0 ? data.data6.data[1].status : '';
+	let it1Data = [];
+	let it2Data = [];
+	let error = null;
 
-	const minIrr = data.data4.length > 0 ? data.data4 : [];
-	const maxIrr = data.data5.length > 0 ? data.data5 : [];
+	const isDataAvailable = (data) => data && data.length > 0;
 
-	const y4 = minIrr.map((item) => item.irradiance);
-	const sumMin = minIrr.map((item) => item.irradiance / 360);
-	const totalmin = sumMin.reduce((acc, cur) => acc + cur, 0);
-	const forecastProduksiPV = totalmin * 6.8 * 0.1917;
+	const sortFields = ['Active Power', 'Reactive Power', 'Voltage', 'Current'];
 
-	const y5 = maxIrr.map((item) => item.irradiance);
-	const sumMax = maxIrr.map((item) => item.irradiance / 360);
-	const totalMax = sumMax.reduce((acc, cur) => acc + cur, 0);
-	const forecastProduksiPVBSS = totalMax * 6.8 * 0.1917;
+	const sortData = (data) => {
+		return data.sort((a, b) => sortFields.indexOf(a._field) - sortFields.indexOf(b._field));
+	};
 
-	const arrayRampRate = [];
-	for (let i = 1; i < y4.length; i++) {
-		const selisih = y5[i + 1] - y4[i];
-		if (!isNaN(selisih)) {
-			arrayRampRate.push(selisih);
+	const fetchData = async () => {
+		try {
+			// Fetch data from both APIs
+			const it1Res = await fetch('/api/it1');
+			const it2Res = await fetch('/api/it2');
+
+			// Check if both requests are primaryful
+			if (!it1Res.ok || !it2Res.ok) {
+				throw new Error('Failed to fetch data');
+			}
+
+			// Parse both JSON responses
+			const it1 = await it1Res.json();
+			const it2 = await it2Res.json();
+
+			// Update the weatherData and dg7Data arrays
+			it1Data = sortData(it1);
+			it2Data = sortData(it2);
+		} catch (err) {
+			error = err.message;
 		}
-	}
+	};
 
-	const arrayMaxBeban = [];
-	for (let i = 1; i < y4.length; i++) {
-		const selisih = y5[i] - y4[i];
-		arrayMaxBeban.push(selisih);
-	}
+	onMount(() => {
+		fetchData();
 
-	const forecastSmooting = forecastProduksiPVBSS - forecastProduksiPV;
-	const kebutuhanDoD = (forecastSmooting / 900) * 100;
-	const maxBebanBSS =
-		Math.max(...arrayMaxBeban) * 6.8 * 0.1917 < 600
-			? Math.max(...arrayMaxBeban) * 6.8 * 0.1917
-			: 600;
-	const rampRate =
-		Math.max(...arrayRampRate) * 6.8 * 0.1917 < 200
-			? Math.max(...arrayRampRate) * 6.8 * 0.1917
-			: 20;
+		const interval = setInterval(fetchData, 5000);
+
+		return () => clearInterval(interval);
+	});
 </script>
 
 <section>
 	<div class="row">
-		<div class="col-9">
+		<div class="col-8">
 			<div class="border rounded-5 ps-5 pt-3 pb-4 shadow bg-white">
 				<div class="text-center mb-3 setting">
 					<h3 class="">REKOMENDASI SETTING BSS</h3>
 					<h4 class="">{convertDate(getToday())}</h4>
 				</div>
-				{#if minIrr.length === 0 && maxIrr.length === 0}
+				{#if settings.length === 0}
 					<div class="text-center kosong d-flex justify-content-center align-items-center">
 						<div class="">
 							<h3 class="mb-3">DATA KOSONG</h3>
@@ -64,7 +67,7 @@
 						</div>
 					</div>
 				{:else}
-					<div class="mb-5">
+					<div class="mb-4">
 						<h5 class="mb-3">Forecast Produksi</h5>
 						<div class="mb-2 row">
 							<label for="inputPassword" class="col-6 col-form-label"
@@ -74,7 +77,7 @@
 								<input
 									type="text"
 									class="form-control text-center"
-									value={forecastProduksiPV.toFixed(2)}
+									value={settings[0].prod_pv.toFixed(2)}
 									disabled
 								/>
 							</div>
@@ -88,7 +91,7 @@
 								<input
 									type="text"
 									class="form-control text-center"
-									value={forecastSmooting.toFixed(2)}
+									value={settings[0].smooth_bss.toFixed(2)}
 									disabled
 								/>
 							</div>
@@ -102,7 +105,7 @@
 								<input
 									type="text"
 									class="form-control text-center"
-									value={forecastProduksiPVBSS.toFixed(2)}
+									value={settings[0].total_pv_bss.toFixed(2)}
 									disabled
 								/>
 							</div>
@@ -116,14 +119,12 @@
 							<div class="col-2 offset-1 text-center feeder">BSS Feeder 2</div>
 						</div>
 						<div class="mb-2 row">
-							<label for="inputPassword" class="col-4 col-form-label"
-								>Kebutuhan %DoD yang Dibutuhkan</label
-							>
+							<label for="inputPassword" class="col-4 col-form-label">Kebutuhan %DoD</label>
 							<div class="col-2 offset-1">
 								<input
 									type="text"
 									class="form-control text-center"
-									value={(kebutuhanDoD / 2).toFixed(2)}
+									value={(settings[0].dod / 2).toFixed(2)}
 									disabled
 								/>
 							</div>
@@ -132,7 +133,7 @@
 								<input
 									type="text"
 									class="form-control text-center"
-									value={(kebutuhanDoD / 2).toFixed(2)}
+									value={(settings[0].dod / 2).toFixed(2)}
 									disabled
 								/>
 							</div>
@@ -141,11 +142,21 @@
 						<div class="mb-2 row">
 							<label for="inputPassword" class="col-4 col-form-label">Setting C-rate</label>
 							<div class="col-2 offset-1">
-								<input type="text" class="form-control text-center" value="0.1" disabled />
+								<input
+									type="text"
+									class="form-control text-center"
+									value={settings[0].crate / 2}
+									disabled
+								/>
 							</div>
 							<label for="inputPassword" class="col-1 col-form-label">C</label>
 							<div class="col-2">
-								<input type="text" class="form-control text-center" value="0.1" disabled />
+								<input
+									type="text"
+									class="form-control text-center"
+									value={settings[0].crate / 2}
+									disabled
+								/>
 							</div>
 							<label for="inputPassword" class="col-1 col-form-label">C</label>
 						</div>
@@ -155,7 +166,7 @@
 								<input
 									type="text"
 									class="form-control text-center"
-									value={((rampRate == 200 ? 20 : rampRate) / 2).toFixed(2)}
+									value={(settings[0].ramprate / 2).toFixed(2)}
 									disabled
 								/>
 							</div>
@@ -164,7 +175,7 @@
 								<input
 									type="text"
 									class="form-control text-center"
-									value={((rampRate == 200 ? 20 : rampRate) / 2).toFixed(2)}
+									value={(settings[0].ramprate / 2).toFixed(2)}
 									disabled
 								/>
 							</div>
@@ -176,7 +187,7 @@
 								<input
 									type="text"
 									class="form-control text-center"
-									value={(maxBebanBSS / 2).toFixed(2)}
+									value={(settings[0].maxbss / 2).toFixed(2)}
 									disabled
 								/>
 							</div>
@@ -185,7 +196,7 @@
 								<input
 									type="text"
 									class="form-control text-center"
-									value={(maxBebanBSS / 2).toFixed(2)}
+									value={(settings[0].maxbss / 2).toFixed(2)}
 									disabled
 								/>
 							</div>
@@ -195,48 +206,67 @@
 				{/if}
 			</div>
 		</div>
-		<div class="col-3">
+		<div class="col-4">
 			<div class="border rounded-5 shadow py-4 bg-white">
 				<div class="text-center mb-3 bss">
-					<h3 class="">KETERSEDIAAN BSS</h3>
-					<h4 class="">{convertDate(getToday())}</h4>
+					<h3 class="">MONITORING BSS</h3>
 				</div>
-				<div class="text-center">
-					<div class="border rounded-5 m-4 py-3 shadow-sm">
-						{#if bss1 === 1}
-							<a href="/output/bss1"><img src={bssOn} alt="" /></a>
-							<div class="on py-2 mt-1">
-								<h6>BSS 1</h6>
-								<p>(Stand by)</p>
+				{#if isDataAvailable(it1Data) && isDataAvailable(it2Data)}
+					<div class="px-2 text-center bss">
+						<div class="row gx-0">
+							<div class="col-6">
+								<div class="py-2 d-flex flex-column justify-content-center align-items-center">
+									<img src={bssOn} alt="" class="mb-1" />
+									<h5 class="text-dark mb-3">BSS Feeder 1</h5>
+									<ul class="list-group">
+										{#each it1Data as it}
+											<li class="list-group-item">
+												<p>{it._field}</p>
+												<h6>{it._value} {units(it._field)}</h6>
+											</li>
+										{/each}
+										{#if it1Data[0]?._value > 0}
+											<li class="list-group-item text-danger"><h6>Discharging</h6></li>
+										{:else if it1Data[0]?._value < 0}
+											<li class="list-group-item text-primary"><h6>Charging</h6></li>
+										{:else}
+											<h5 class="card-title me-2">-</h5>
+										{/if}
+									</ul>
+									<div class="text-center mt-2">
+										<a href="/output/bss1">Detail <i class="bi-arrow-right-circle" /></a>
+									</div>
+								</div>
 							</div>
-						{:else if bss1 === 0}
-							<a href="/output/bss1"><img src={bssOff} alt="" /></a>
-							<div class="off py-2 mt-1">
-								<h6>BSS 1</h6>
-								<p>(Pemeliharaan)</p>
+							<div class="col-6">
+								<div class="py-2 d-flex flex-column justify-content-center align-items-center">
+									<img src={bssOn} alt="" class="mb-1" />
+									<h5 class="text-dark mb-3">BSS Feeder 2</h5>
+									<ul class="list-group">
+										{#each it2Data as it}
+											<li class="list-group-item">
+												<p>{it._field}</p>
+												<h6>{it._value} {units(it._field)}</h6>
+											</li>
+										{/each}
+										{#if it2Data[0]?._value > 0}
+											<li class="list-group-item text-danger"><h6>Discharging</h6></li>
+										{:else if it2Data[0]?._value < 0}
+											<li class="list-group-item text-primary"><h6>Charging</h6></li>
+										{:else}
+											<h5 class="card-title me-2">-</h5>
+										{/if}
+									</ul>
+									<div class="text-center mt-2">
+										<a href="/output/bss2">Detail <i class="bi-arrow-right-circle" /></a>
+									</div>
+								</div>
 							</div>
-						{/if}
+						</div>
 					</div>
-					<div class="border rounded-5 m-4 py-3 shadow-sm">
-						{#if bss2 === 1}
-							<a href="output/bss2"><img src={bssOn} alt="" /></a>
-							<div class="on py-2 mt-1">
-								<h6>BSS 2</h6>
-								<p>(Stand by)</p>
-							</div>
-						{:else if bss1 === 0}
-							<a href="output/bss2"><img src={bssOff} alt="" /></a>
-							<div class="off py-2 mt-1">
-								<h6>BSS 2</h6>
-								<p>(Pemeliharaan)</p>
-							</div>
-						{/if}
-					</div>
-				</div>
-				<div class="text-center moma">
-					<p class="mb-1">Source</p>
-					<img src={moma} alt="" />
-				</div>
+				{:else}
+					<p class="text-center">Error: {error}</p>
+				{/if}
 			</div>
 		</div>
 	</div>
@@ -252,7 +282,8 @@
 	.btn:hover {
 		background-color: #43a6a3df;
 	} */
-	h5, .feeder {
+	h5,
+	.feeder {
 		font-weight: 700;
 	}
 	.setting h3 {
@@ -271,41 +302,8 @@
 		color: #43a6a3;
 		font-size: 20px;
 	}
-	.bss h4 {
-		margin: 0;
-		font-size: 15px;
-		color: #43a6a3;
-	}
-	.on {
-		border: 5px solid #43a6a3;
-		border-radius: 15px;
-		margin: 0px 70px;
-	}
-	.off {
-		border: 5px solid #2f3e46;
-		border-radius: 15px;
-		color: #ffffff;
-		margin: 0px 60px;
-	}
-	p {
-		margin: 0px;
-		font-weight: 500;
-		font-size: 12px;
-		color: #2f3e46;
-	}
-	h6 {
-		margin: 0px;
-		font-size: 12px;
-		color: #2f3e46;
-	}
 	img {
 		width: 30%;
-	}
-	.moma img {
-		width: 20%;
-	}
-	.moma p {
-		font-weight: 400;
 	}
 	.kosong {
 		height: 50vh;
@@ -320,5 +318,26 @@
 	}
 	.btn:hover {
 		background-color: #43a6a3df;
+	}
+	.bss h5 {
+		font-weight: 700;
+		font-size: 15px;
+	}
+	.bss h6 {
+		margin: 0px;
+		font-weight: 500;
+		font-size: 13px;
+	}
+	.bss p {
+		margin: 0px;
+		font-weight: 400;
+		font-size: 12px;
+		color: #2f3e46;
+	}
+	.bss a {
+		text-decoration: none;
+		font-weight: 600;
+		font-size: 13px;
+		
 	}
 </style>
