@@ -75,8 +75,8 @@
 					<td>{date(set.tanggal)}</td>
 					<td>{set.dod.toFixed(2)}</td>
 					<td>{set.crate}</td>
-					<td>{set.ramprate}</td>
-					<td>{set.maxbss}</td>
+					<td>{(set.ramprate).toFixed(0)}</td>
+					<td>{(set.maxbss).toFixed(0)}</td>
 				</tr>
 			{/each}
 		</tbody>

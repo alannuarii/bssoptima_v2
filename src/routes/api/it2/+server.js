@@ -9,7 +9,7 @@ const url = URL
 const query = `
 from(bucket: "${bucket}")
   |> range(start: -1m)
-  |> filter(fn: (r) => r._measurement == "IT1")
+  |> filter(fn: (r) => r._measurement == "IT2")
   |> filter(fn: (r) => r._field == "Active Power" or r._field == "Reactive Power" or r._field == "Voltage" or r._field == "Current")
   |> last()
 `;

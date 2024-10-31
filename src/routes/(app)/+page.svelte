@@ -227,7 +227,7 @@
 										{/each}
 										{#if it1Data[0]?._value > 0}
 											<li class="list-group-item text-danger"><h6>Discharging</h6></li>
-										{:else if it1Data[0]?._value < 0}
+										{:else if it1Data[0]?._value <= -1}
 											<li class="list-group-item text-primary"><h6>Charging</h6></li>
 										{:else}
 											<h5 class="card-title me-2">-</h5>
@@ -251,7 +251,7 @@
 										{/each}
 										{#if it2Data[0]?._value > 0}
 											<li class="list-group-item text-danger"><h6>Discharging</h6></li>
-										{:else if it2Data[0]?._value < 0}
+										{:else if it2Data[0]?._value <= -1}
 											<li class="list-group-item text-primary"><h6>Charging</h6></li>
 										{:else}
 											<h5 class="card-title me-2">-</h5>
