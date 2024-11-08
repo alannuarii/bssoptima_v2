@@ -246,7 +246,11 @@
 										{#each it2Data as it}
 											<li class="list-group-item">
 												<p>{it._field}</p>
+												{#if it._field === "Active Power"}
+												<h6>{it._value * 100} {units(it._field)}</h6>
+												{:else}
 												<h6>{it._value} {units(it._field)}</h6>
+												{/if}
 											</li>
 										{/each}
 										{#if it2Data[0]?._value > 0}
