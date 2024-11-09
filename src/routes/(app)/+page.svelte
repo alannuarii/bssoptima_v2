@@ -9,7 +9,7 @@
 
 	let it1Data = [];
 	let it2Data = [];
-	let error = "Loading . . .";
+	let error = 'Loading . . .';
 
 	const isDataAvailable = (data) => data && data.length > 0;
 
@@ -222,7 +222,11 @@
 										{#each it1Data as it}
 											<li class="list-group-item">
 												<p>{it._field}</p>
-												<h6>{it._value} {units(it._field)}</h6>
+												{#if it._field === 'Active Power'}
+													<h6>{it._value * 100} {units(it._field)}</h6>
+												{:else}
+													<h6>{it._value} {units(it._field)}</h6>
+												{/if}
 											</li>
 										{/each}
 										{#if it1Data[0]?._value > 0}
@@ -246,10 +250,10 @@
 										{#each it2Data as it}
 											<li class="list-group-item">
 												<p>{it._field}</p>
-												{#if it._field === "Active Power"}
-												<h6>{it._value * 100} {units(it._field)}</h6>
+												{#if it._field === 'Active Power'}
+													<h6>{it._value * 100} {units(it._field)}</h6>
 												{:else}
-												<h6>{it._value} {units(it._field)}</h6>
+													<h6>{it._value} {units(it._field)}</h6>
 												{/if}
 											</li>
 										{/each}
@@ -342,6 +346,5 @@
 		text-decoration: none;
 		font-weight: 600;
 		font-size: 13px;
-		
 	}
 </style>
